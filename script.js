@@ -300,6 +300,66 @@ skipLink.addEventListener('blur', () => {
 document.body.prepend(skipLink);
 
 // ================================
+// CURSOR LIGHT EFFECT
+// ================================
+
+const cursorLight = document.getElementById('cursorLight');
+let mouseX = 0;
+let mouseY = 0;
+let currentX = 0;
+let currentY = 0;
+let isMouseMoving = false;
+let mouseTimeout;
+
+// Track mouse movement
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    if (!isMouseMoving) {
+        cursorLight.classList.add('active');
+        cursorLight.classList.remove('inactive');
+        isMouseMoving = true;
+    }
+    
+    // Clear existing timeout
+    clearTimeout(mouseTimeout);
+    
+    // Set new timeout to hide light after mouse stops
+    mouseTimeout = setTimeout(() => {
+        cursorLight.classList.remove('active');
+        cursorLight.classList.add('inactive');
+        isMouseMoving = false;
+    }, 2000);
+});
+
+// Smooth cursor light animation
+function animateCursorLight() {
+    currentX += (mouseX - currentX) * 0.1;
+    currentY += (mouseY - currentY) * 0.1;
+    
+    cursorLight.style.left = currentX + 'px';
+    cursorLight.style.top = currentY + 'px';
+    
+    requestAnimationFrame(animateCursorLight);
+}
+
+// Start animation
+animateCursorLight();
+
+// Hide cursor light when mouse leaves window
+document.addEventListener('mouseleave', () => {
+    cursorLight.classList.remove('active');
+    cursorLight.classList.add('inactive');
+});
+
+// Show cursor light when mouse enters window
+document.addEventListener('mouseenter', () => {
+    cursorLight.classList.add('active');
+    cursorLight.classList.remove('inactive');
+});
+
+// ================================
 // INITIALIZE ON PAGE LOAD
 // ================================
 
