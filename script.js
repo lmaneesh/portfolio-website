@@ -145,19 +145,20 @@ downloadResumeBtn.addEventListener('click', (e) => {
     
     // Create a temporary message
     const originalText = downloadResumeBtn.textContent;
-    downloadResumeBtn.textContent = 'Preparing download...';
+    downloadResumeBtn.textContent = 'Downloading...';
     
-    // Use the browser's print functionality as a PDF export option
+    // Download the resume PDF file
+    const link = document.createElement('a');
+    link.href = 'resume.pdf'; // Path to your resume PDF file
+    link.download = 'Lekkala_Maneesh_Chowdhary_Resume.pdf'; // Downloaded filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Reset button text
     setTimeout(() => {
-        window.print();
         downloadResumeBtn.textContent = originalText;
-    }, 500);
-    
-    // Alternative: If you have a PDF file, uncomment below and comment out the print functionality
-    // const link = document.createElement('a');
-    // link.href = 'path/to/your/resume.pdf';
-    // link.download = 'Lekkala_Maneesh_Chowdhary_Resume.pdf';
-    // link.click();
+    }, 1000);
 });
 
 // ================================
